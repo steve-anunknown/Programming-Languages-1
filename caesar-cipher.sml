@@ -2,31 +2,10 @@
 
 use "functions.sml";
 
- (*=====================VARIABLES======================*)
-
-
  (*====================MAIN-FUNCTION==================*)
-
-(*fun readfile file = 
-  let
-    val inpstr = TextIO.openIn file
-    val text_string = TextIO.inputAll inpstr
-    val closed = TextIO.closeIn inpstr
-  in
-    print text_string;
-    print "\n"
-  end*)
 
 fun decrypt filename = 
   let
-    fun readfile file = 
-      let
-        val inpstr = TextIO.openIn file
-        val text_string = TextIO.inputAll inpstr
-        val closed = TextIO.closeIn inpstr
-      in
-        text_string
-      end
     val english_alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
     val english_frequencies = [0.08167, 0.01492, 0.02782, 0.04253, 0.12702, 0.0228,
     0.02015, 0.06094, 0.06966, 0.00153, 0.00772, 0.04025,
