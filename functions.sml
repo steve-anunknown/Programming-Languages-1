@@ -99,3 +99,13 @@ fun beast_entropy normal real_list_list =
   in
     map (fn real_list => entropy normal real_list) real_list_list 
   end
+
+(*reads contents from file end returns string. string -> string*)
+fun readfile file = 
+      let
+        val inpstr = TextIO.openIn file
+        val text_string = TextIO.inputAll inpstr
+        val closed = TextIO.closeIn inpstr
+      in
+        text_string
+      end
