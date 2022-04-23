@@ -1,5 +1,3 @@
-
-
 fun length l = if (null l) then 0 else (1+ length (tl l))
 
 fun get_nth (head::tail) index = if index = 0 then head else get_nth tail (index-1)
@@ -18,39 +16,6 @@ fun ultra_map nil nil = nil
   | ultra_map nil _ = nil
   | ultra_map _ nil = nil
   | ultra_map func_list char_list = [map (hd func_list) char_list]@(ultra_map (tl func_list) char_list)
-
-fun calc_freqs intext =
-  let
-    fun isupper c = (65 <= ord c) andalso (ord c <= 90)
-    fun islower c = (97 <= ord c) andalso (ord c <= 122)
-    fun ischar c = (isupper c) orelse (islower c)  
-    fun total_chars nil = 0.0
-      | total_chars (h::tail) = 
-      if ischar h 
-      then 
-        1.0+(total_chars tail)
-      else
-        total_chars tail
-    fun increment_nth nil _ = nil :real list
-      | increment_nth (h::rest) 0 = (h+1.0)::rest
-      | increment_nth (h::rest) num = [h]@(increment_nth rest (num-1))
-    fun count_occur nil alphabet = alphabet  
-      | count_occur (c::tail) alphabet =
-      if not (ischar c)
-      then
-        count_occur tail alphabet
-      else
-        if isupper c
-        then
-          count_occur tail (increment_nth alphabet (ord c - 65))
-        else
-          count_occur tail (increment_nth alphabet (ord c - 97))
-    val total = total_chars (explode intext)
-    val occur =
-      [0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
-  in
-    map (fn x => x / total) (count_occur (explode intext) occur)
-  end;
 
 fun beast_rotn num_list = 
   let 
