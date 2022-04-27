@@ -9,6 +9,14 @@ fun smalltank file =
     val towns = readInt inStream (* read number of towns *)
     val roads = readInt inStream (* read number of roads *)
     val min_gas_towns = Array.array (towns, 0)
+    
+    (* There is no need to actually store the variables "towns" and "roads"
+     * as they are only used once. Their only purpose is readability.
+     * What could be done instead is to call:
+     * val min_gas_towns = Array.array (read inStream,0)
+     * and then, inside the body of the function, call the "readRoads"
+     * functions with the following parametres:
+     * readRoads (readInt inStream) (readInt inStream-1) (readInt inStream-1) (readInt inStream) *)
 
     fun max arr = Array.foldl (fn (a,b) => if a>b then a else b) (Array.sub (arr,0)) arr
     fun readRoads 0 _ _ _ = min_gas_towns
