@@ -1,34 +1,26 @@
-fun min_fill file =
+fun smalltank file =
   let
-    (* reads an integer *)
     fun readInt input =
-      Option.valOf (TextIO.scanStream (Int.scan StringCvt.DEC) input)
+      case (TextIO.scanStream (Int.scan StringCvt.DEC) input) of
+           SOME num => num
+         | NONE     => 0
 
     val inStream = TextIO.openIn file (* create input stream from file *)
     val towns = readInt inStream (* read number of towns *)
     val roads = readInt inStream (* read number of roads *)
     val _ = TextIO.inputLine inStream (* skip next line escape character *)
-   
-    (* skip num characters and read the (num+1)th*)
-    fun readremain input 0 = readInt input
-      | readremain input num = 
-      let
-        val _ = readInt input
-      in
-          readremain input (num-1)
-      end
-    (* read the 3rd character of num number of lines*)  
-    fun readlines 0 linelist = linelist
-      | readlines num linelist = [readremain inStream 2]@(readlines (num-1) nil)
-    (* find maximum element of list*)
-    fun max l = foldl (fn (a,b) => if a>b then a else b) (hd l) (tl l) 
-  in
-    (* read the weight of each road-line
-     * merge them into ascending order
-     * take the "number of towns" first minima
-     * find the maximum element of those
-     * convert it to string and print it*)
-    print (Int.toString (max (List.take (ListMergeSort.sort (op >) (readlines roads nil), towns))));
-    print "\n"
-  end
+    val min_gas_towns = Array.array (towns, 0)
 
+    fun max arr = Array.foldl (fn (a,b) => if a>b then a else b) (Array.sub (arr,0)) arr
+    fun readRoads 0 _ _ _ _= min_gas_towns
+      | readRoads numRoads from to weight _ =
+      (case ((Array.sub (min_gas_towns,from)=0 orelse weight<Array.sub (min_gas_towns,from)),
+       (Array.sub (min_gas_towns,to)=0 orelse weight<Array.sub (min_gas_towns,to))) of
+            (false,false) => ()
+          | (false, true) => Array.update (min_gas_towns,to,weight)
+          | (true, false) => Array.update (min_gas_towns,from,weight)
+          | (true, true) => Array.update (min_gas_towns,to,weight); Array.update(min_gas_towns,from,weight);
+             readRoads (numRoads-1) (readInt inStream -1) (readInt inStream -1) (readInt inStream) (TextIO.inputLine inStream))
+  in
+    print (Int.toString (max (readRoads roads (readInt inStream -1) (readInt inStream -1) (readInt inStream) (TextIO.inputLine inStream))) ^ "\n")
+  end
