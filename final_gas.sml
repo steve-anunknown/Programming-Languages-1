@@ -22,5 +22,5 @@ fun smalltank file =
           | (true, true) => Array.update (min_gas_towns,to,weight); Array.update(min_gas_towns,from,weight);
              readRoads (numRoads-1) (readInt inStream -1) (readInt inStream -1) (readInt inStream) (TextIO.inputLine inStream))
   in
-    print (Int.toString (max (readRoads roads (readInt inStream -1) (readInt inStream -1) (readInt inStream) (TextIO.inputLine inStream))) ^ "\n")
+    print (Int.toString (max (readRoads roads (readInt inStream -1) (readInt inStream -1) (readInt inStream) (TextIO.inputLine inStream))) ^ "\n") before TextIO.closeIn inStream
   end
