@@ -51,8 +51,6 @@ void calc_freqs(const char text[], double freqs[])
 	double total = 0;
 	unsigned int flag = 0;
 	unsigned int counts[SIZE] = { 0 };
-	//printf("%s ",text);
-	//printf("%u ",(unsigned int)strlen(text));
 	for (unsigned int i=0; i<strlen(text); ++i)
 	{
 		flag = ischar(text[i]);
@@ -68,11 +66,7 @@ void calc_freqs(const char text[], double freqs[])
 		}
 	}
 	for (unsigned int i=0; i<SIZE; ++i) 
-	{
 		freqs[i]=counts[i]/total;
-		//if (counts[i]!=0) printf("count %u ",counts[i]);
-	}
-	//printf("total %u\n",total);
 }
 
 void decypher(const char encrypted[], char temp[], char res[])
@@ -96,10 +90,8 @@ void decypher(const char encrypted[], char temp[], char res[])
 			}
 			else temp[i] = encrypted[i];
 		}
-		//printf("%s \n",temp);
 		calc_freqs(temp,freqs);
 		double entr=entropy(freqs,freq_english);
-		//printf("%f \n", entr);
 		if (entr<=min) 
 		{
 			min = entr;
